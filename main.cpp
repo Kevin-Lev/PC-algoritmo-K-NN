@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -62,15 +63,37 @@ void insereVetor(int tamLinhas, dadosArquivo *vetorDados, string nomeArquivo){
   }
 }
 
-int main(){
 
-  string arquivoTest = "test_59.data", arquivoBase = "train_59.data";
-  int linhasTest = contaLinhas(arquivoTest), linhasBase = contaLinhas(arquivoBase);
+int main(int argc, char* argv[]){
+
+  string arquivoTest = argv[1], arquivoBase = argv[2];
+  int k=0, l=0, linhasTest = contaLinhas(arquivoTest), linhasBase = contaLinhas(arquivoBase);
+  float aux, distancia = 0, menorDistancia = 100000;
+  vector<float> vetorDistancias;
   dadosArquivo dadosTest[linhasTest], dadosBase[linhasBase];
-
   insereVetor(linhasTest, dadosTest, arquivoTest);
   insereVetor(linhasBase, dadosBase, arquivoBase);
   //printaVetor(dadosTest, linhasTest);
   //printaVetor(dadosBase, linhasBase);
+
+  cout << "Calculando a distância entre as colunas das matrizes..." << endl;
+
+  for(int i=0;i<linhasTest;i++){
+    for(int j=0;j<linhasBase;j++){
+      for(int k=0;k<dadosBase[j].linhasArquivo.size();k++){  // dadosTest.linhasArquivo e dadosBase.linhasArquivo tem o mesmo tamanho.
+        //cout << "dadosTest[" << i << "].linhasArquivo[" << k << "]: " << dadosTest[i].linhasArquivo[k] << endl;
+        //cout << "dadosBase[" << j << "].linhasArquivo[" << k << "]: " << dadosBase[j].linhasArquivo[k] << endl << endl;
+        distancia = distancia + abs(pow((dadosTest[i].linhasArquivo[k] - dadosBase[j].linhasArquivo[k]), 2));
+      }
+      distancia = sqrt(distancia);
+      //cout << "distancia: " << distancia << endl << endl;
+      if(distancia < menorDistancia){
+        menorDistancia = distancia;
+      }
+      vetorDistancias.push_back(menorDistancia);
+      menorDistancia = 100000;
+      distancia = 0;
+    }
+  }
 
 }
