@@ -1,0 +1,7 @@
+Passos para executar o algoritmo:
+
+1. Abra o terminal e vá até o diretório do arquivo main.cpp
+
+2. Execute o comando:
+
+     g++ -std=c++11 -pthread main.cpp && ./a.out ../diretorio/do/Test/nomeDoTest.data ../diretorio/do/Train/nomeDoTrain.data 
