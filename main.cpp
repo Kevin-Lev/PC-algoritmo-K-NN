@@ -155,8 +155,8 @@ vector<distanciaClasse> calculaDistancia(int linhasTest, int linhasBase, dadosAr
 int main(int argc, char* argv[]){
 
   unsigned concurrentThreadsSupported = std::thread::hardware_concurrency();
-  int args[concurrentThreadsSupported], linhasTest = contaLinhas(argv[1]), linhasBase = contaLinhas(argv[2]);
-  int divisaoBase, restoBase, distancia = 0;
+  int args[concurrentThreadsSupported], linhasTest = contaLinhas(argv[1]), linhasBase = contaLinhas(argv[2]), divisaoBase, restoBase, distancia = 0;
+  float speedUp;
   distanciaClasse auxiliarLocal[linhasBase];
   dadosArquivo dadosTest[linhasTest], dadosBase[linhasBase];
   argsfuncDist vetorParametros[concurrentThreadsSupported];
@@ -222,8 +222,11 @@ int main(int argc, char* argv[]){
   fimThreads = time(NULL);
 
   //printaVetor(vetorDistancias);
+  speedUp = (difftime(fim, inicio))/(difftime(fimThreads, inicioThreads));
 
   cout << "tempo gasto para o cálculo de distância sequencial: " << difftime(fim, inicio) << " segundos" << endl;
-  cout << "tempo gasto para o cálculo de distância concorrente: " << difftime(fimThreads, inicioThreads) << " segundos" << endl;
+  cout << "tempo gasto para o cálculo de distância concorrente: " << difftime(fimThreads, inicioThreads) << " segundos" << endl << endl;
+  cout << "Speed Up[" << concurrentThreadsSupported << "]: " << speedUp << " segundos" << endl;
+
 
 }
